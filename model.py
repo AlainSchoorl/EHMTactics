@@ -1,3 +1,7 @@
+list = [1,2,3]
+print(len(list))
+
+
 ''''import random
 class Individual:
     """represents a player strategy"""

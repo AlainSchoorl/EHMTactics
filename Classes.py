@@ -1,67 +1,52 @@
 import random
+from operator import itemgetter
 
-class Individual
-    __genes = []
-    __playerGenes = []
-    __fitness = []
-
-    def __init__(self, geneCode, playerCode):
-        self.__genes = geneCode
-        self.__playerGenes = playerCode
-
-    def getGenes(self):
-        return self.__genes
-
-    def getPlayerGenes(self):
-        return self.__playerGenes
-
-    def getFitness(self):
-        return self.__fitness
-
-    def setFitness(self, l):
-        self.__fitness = l
+class Individual(list):
 
     def mutate(self):
-        if random.random < 0.042
-            self.__genes[0] = random.randint(1,5)
-        if random.random < 0.042
-            self.__genes[1] = random.randint(1,4)
-        if random.random < 0.042
-            self.__genes[2] = random.randint(1,3)
-        if random.random < 0.042
-            self.__genes[3] = random.randint(1,6)
-        if random.random < 0.042
-            self.__genes[4] = random.randint(1,4)
-        if random.random < 0.042
-            self.__genes[5] = random.randint(1,3)
-        if random.random < 0.042
-            self.__genes[6] = random.randint(1,4)
-        if random.random < 0.042
-            self.__genes[7] = random.randint(1,3)
-        #Run through each genes element and have a small chance of changing them completely
-        for x in range(0, 17)
-            for y in range(0, 9)
-                if random.random < 0.042
-                    self.__playerGenes[((x*13)+y)] = random.randint(1,5)
-            for y in range(10,12)
-                if random.random < 0.042
-                    self.__playerGenes[(x*13)+y] = random.randint(0,1)
-        #Then run through each playerGenes element and have a small chance of changing them completely
+        mutConst = 0.2
+        mutConst2 = 0.3
+        for x in range(0, 18):
+            for y in range(0, 10):
+                if random.random() < mutConst:
+                    self[((x*13)+y)] = random.randint(1,5)
+            for y in range(10, 3):
+                if random.random() < mutConst:
+                    self[(x*13)+y] = random.randint(0,2)
+        #run through each playerGenes element and have a small chance of changing them completely
 
-    def breed(self, partner)
+        if random.random() < mutConst2:
+            self[234] = random.randint(1,5)
+        if random.random() < mutConst2:
+            self[235] = random.randint(1,4)
+        if random.random() < mutConst2:
+            self[236] = random.randint(1,3)
+        if random.random() < mutConst2:
+            self[237] = random.randint(1,6)
+        if random.random() < mutConst2:
+            self[238] = random.randint(1,4)
+        if random.random() < mutConst2:
+            self[239] = random.randint(1,3)
+        if random.random() < mutConst2:
+            self[240] = random.randint(1,4)
+        if random.random() < mutConst2:
+            self[241] = random.randint(1,3)
+        #Then run through each genes element and have a small chance of changing them completely
+
+    def breed(self, partner, i):
         child = self
-        for x in self.__genes:
-            if random.random < 0.5
-                child.getGenes[x] = partner.getGenes[x]
-        for x in self.__playerGenes:
-            if random.random < 0.5
-                child.getGenes[x] = partner.getGenes[x]
+        for x in range(0,242):
+            if random.random() < 0.5:
+                child[x] = partner[x]
+        child[242] = 0
+        child[243] = 0
+        child[244] = i
         return child
 
-    def toText(self:
-        #all genes in csv
+    def toText(self):
+        print("text in csv")#all genes in csv
 
-class Population
+class Population:
     __individuals = []
 
     def __init__(self, i):
@@ -73,39 +58,46 @@ class Population
     def getLength(self):
         return len(self.__individuals)
 
+    def getFull(self):
+        return self.__individuals
+
+    def addLucky(self, l):
+        self.__individuals.extend(l)
+
     def sort(self):
-        #Sort population from most fit to least fit
+        self.__individuals = sorted(self.__individuals, key=itemgetter(244,242), reverse=True)
 
     def toText(self):
         print(self.__individuals)
 
     def selectParents(self):
         self.sort()
-        parents = self.__individuals[0:32]
+        parents = Population(self.__individuals[0:32])
         tempList = []
         usedList = []
-        for x in range(0, 17)
+        print(len(self.__individuals))
+        for x in range(0, 18):
             y = random.randint(32, 99)
-            while y in usedList
+            while y in usedList:
                 y = random.randint(32,99)
             tempList.append(self.__individuals[y])
             usedList.append(y)
-        parents = parents.extend(tempList)
+        parents.addLucky(tempList)
         return parents
 
-    def breed(self):
+    def breed(self, i):
         random.shuffle(self.__individuals)
         newList = []
-        x = 0
-        while x < 49
-            newList.append(self.__individuals[x].breed(self.__individuals[(x+1)]))
-            x += 2
-        random.shuffle(self.__individuals)
-        x = 0
-        while x < 49
-            newList.append(self.__individuals[x].breed(self.__individuals[(x+1)]))
-            x += 2
-        for x in newList
-            if random.random < 0.25
+        i = i*-1
+        for r in range(0,4):
+            x = 0
+            while x < 49:
+                newList.append(self.__individuals[x].breed(self.__individuals[(x+1)], i))
+                x += 2
+            random.shuffle(self.__individuals)
+            print ('Breeding. Now has ' + str(len(newList)))
+        for x in range(0,100):
+            if random.random() < 0.33:
                 newList[x].mutate()
-        return newList
+        newGen = Population(newList)
+        return newGen
