@@ -8,7 +8,7 @@ class Individual(list):
         mutConst = 0.015
         mutConst2 = 0.015
         mutConst3 = 0.035
-        for x in range(0, 18):
+        for x in range(0, 5):
             for y in range(0, 10):
                 if random.random() < mutConst or (random.random() < mutConst3 and ((x*13)+y) in extinctList):
                     mod = ((x*13) + y ) % 13
@@ -25,31 +25,32 @@ class Individual(list):
                     self[((x * 13) + y)] = random.randint(0, 1)
         #run through each playerGenes element and have a small chance of changing them completely
         if random.random() < mutConst2 or (random.random() < mutConst3 and 234 in extinctList):
-            self[234] = random.randint(1, 5)
+            self[65] = random.randint(1, 5)
         if random.random() < mutConst2 or (random.random() < mutConst3 and 235 in extinctList):
-            self[235] = random.randint(1,4)
+            self[66] = random.randint(1,4)
         if random.random() < mutConst2 or (random.random() < mutConst3 and 236 in extinctList):
-            self[236] = random.randint(1,3)
+            self[67] = random.randint(1,3)
         if random.random() < mutConst2 or (random.random() < mutConst3 and 237 in extinctList):
-            self[237] = random.randint(1,6)
+            self[68] = random.randint(1,6)
         if random.random() < mutConst2 or (random.random() < mutConst3 and 238 in extinctList):
-            self[238] = random.randint(1,4)
+            self[69] = random.randint(1,4)
         if random.random() < mutConst2 or (random.random() < mutConst3 and 239 in extinctList):
-            self[239] = random.randint(1,3)
+            self[70] = random.randint(1,3)
         if random.random() < mutConst2 or (random.random() < mutConst3 and 240 in extinctList):
-            self[240] = random.randint(1,4)
+            self[71] = random.randint(1,4)
         if random.random() < mutConst2 or (random.random() < mutConst3 and 241 in extinctList):
-            self[241] = random.randint(1,3)
+            self[72] = random.randint(1,3)
         #Then run through each genes element and have a small chance of changing them completely
 
     def breed(self, partner, i):
         child = self
-        for x in range(0,242):
+        for x in range(0,72):
             if random.random() < 0.5:
                 child[x] = partner[x]
-        child[242] = 0
-        child[243] = 0
-        child[244] = i
+        child[73] = 0
+        child[74] = 0
+        child[75] = i
+        child[76] = 0
         return child
 
     def toText(self):
@@ -77,7 +78,7 @@ class Population:
         self.__individuals.extend(l)
 
     def sort(self):
-        self.__individuals = sorted(self.__individuals, key=itemgetter(244,242), reverse=True)
+        self.__individuals = sorted(self.__individuals, key=itemgetter(75,73), reverse=True)
 
     def toText(self):
         print(self.__individuals)
@@ -88,11 +89,11 @@ class Population:
     def selectParents(self):
         self.sort()
         parents = Population(self.__individuals[0:36])
-        parents.addLucky(self.__individuals[0:4])
+        parents.addLucky(self.__individuals[0:6])
         tempList = []
         usedList = []
         print(len(self.__individuals))
-        for x in range(0, 10):
+        for x in range(0, 8):
             y = random.randint(36, 99)
             while y in usedList:
                 y = random.randint(36,99)
@@ -120,7 +121,7 @@ class Population:
 
     def getExtinctList(self):
         newList = []
-        for x in range(0, 18):
+        for x in range(0, 5):
             for y in range(0, 10):
                 count1 = 0
                 count2 = 0
@@ -154,7 +155,7 @@ class Population:
                 if count1 > 90 or count1 < 10:
                     newList.append((x * 13) + y)
                     print ("Added " + str((x * 13) + y) + " to extinctList")
-        for run in range(234, 241):
+        for run in range(65, 72):
             count1 = 0
             count2 = 0
             count3 = 0
@@ -179,19 +180,19 @@ class Population:
             for count in iterator:
                 if count < 3:
                     i += 1
-            if run == 234:
+            if run == 65:
                 if i > 1:
                     newList.append(run)
                     print ("Added " + str(run) + " to extinctList")
-            elif run == 235 or run == 238 or run == 240:
+            elif run == 66 or run == 69 or run == 71:
                 if i > 2:
                     newList.append(run)
                     print ("Added " + str(run) + " to extinctList")
-            elif run == 236 or run == 239 or run == 241:
+            elif run == 67 or run == 70 or run == 72:
                 if i > 3:
                     newList.append(run)
                     print ("Added " + str(run) + " to extinctList")
-            elif run == 237:
+            elif run == 68:
                 if i > 0:
                     newList.append(run)
                     print ("Added " + str(run) + " to extinctList")

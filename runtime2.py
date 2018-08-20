@@ -1,6 +1,6 @@
 import random
-from Classes import Population
-from Classes import Individual
+from Classes2 import Population
+from Classes2 import Individual
 import ctypes
 import time
 import numpy as np
@@ -31,22 +31,31 @@ def randomPopulation():
     newPopulation = []
     for x in range(0,100):
         newGenes = []
-        for y in range(0,18):
+        for y in range(0,5):
             for z in range(0,10):
-                newGenes.append(random.randint(1,6))
+                mod = ((y * 13) + z) % 13
+                if mod == 1 or mod == 7:
+                    newGenes.append(random.randint(3, 5))
+                elif mod == 2 or mod == 6 or mod == 10:
+                    newGenes.append(random.randint(3, 3))
+                elif mod == 8 or mod == 9:
+                    newGenes.append(random.randint(2, 5))
+                else:
+                    newGenes.append(random.randint(1, 5))
             for z in range(0,3):
-                newGenes.append(random.randint(0,2))
+                newGenes.append(random.randint(0,1))
+        newGenes.append(random.randint(1,5))
+        newGenes.append(random.randint(1,4))
+        newGenes.append(random.randint(1,3))
         newGenes.append(random.randint(1,6))
-        newGenes.append(random.randint(1,5))
         newGenes.append(random.randint(1,4))
-        newGenes.append(random.randint(1,7))
-        newGenes.append(random.randint(1,5))
+        newGenes.append(random.randint(1,3))
         newGenes.append(random.randint(1,4))
-        newGenes.append(random.randint(1,5))
-        newGenes.append(random.randint(1,4))
+        newGenes.append(random.randint(1,3))
         newGenes.append(0)
         newGenes.append(0)
         newGenes.append(-1)
+        newGenes.append(0)
         newPopulation.append(Individual(newGenes))
     returnPop = Population(newPopulation)
     return returnPop
@@ -65,9 +74,9 @@ def runSimulation(sta, rs):
         click(881, 353)
         time.sleep(0.5)
         if not (counter == 100):
-            goalsFor = 0
-            goalsAgainst = 0
-            for a in range(0,3):
+            goalsFor = working.getIndividual(counter)[73]
+            goalsAgainst = working.getIndividual(counter)[74]
+            for a in range(working.getIndividual(counter)[76], 3):
                 if not (rs == 1):
                     print 'not starting with results'
                     print ('starting with: ' + str(counter))
@@ -80,10 +89,11 @@ def runSimulation(sta, rs):
                 rs = 0
                 goalsFor = goalsFor + r[0]
                 goalsAgainst = goalsAgainst + r[1]
+                working.getIndividual(counter)[73] = goalsFor
+                working.getIndividual(counter)[74] = goalsAgainst
+                save(working, generation)
                 reloadGame()
-            working.getIndividual(counter)[242] = goalsFor
-            working.getIndividual(counter)[243] = goalsAgainst
-            working.getIndividual(counter)[244] = (goalsFor / (goalsFor + goalsAgainst))
+            working.getIndividual(counter)[75] = (goalsFor / (goalsFor + goalsAgainst))
             save(working, generation)
 
 def setTactics(ind):
@@ -94,6 +104,7 @@ def setTactics(ind):
     time.sleep(0.25)
     click(362,109) #personal tactics
     time.sleep(0.11)
+    pos = 0
     for x in range(0,18):
         get_region([1474,56,1538,76], 15, Image.BICUBIC)
         string = get_string((src_path + str(15) + "test.png"), 0)
@@ -102,21 +113,23 @@ def setTactics(ind):
             time.sleep(0.11)
             for y in range(0,10):
                 z = 1
-                while z < ind[x*13+y]:
+                while z < ind[pos*13+y]:
                     click(1825,295+y*23)
                     time.sleep(0.11)
                     z += 1
-            if ind[x*13+10] > 0:
+            if ind[pos*13+10] > 0:
                 click(1573, 568)
                 time.sleep(0.11)
                 click(1325, 597)
                 time.sleep(0.11)
-            if ind[x*13+11] > 0:
+            if ind[pos*13+11] > 0:
                 click(1651, 614)
                 time.sleep(0.11)
-            if ind[x*13+12] > 0:
+            if ind[pos*13+12] > 0:
                 click(1651, 634)
                 time.sleep(0.11)
+            if x == 2 or x == 5 or x == 9 or x == 13:
+                pos += 1
             if msvcrt.kbhit():
                 if ord(msvcrt.getch()) == 27:
                     sys.exit()
@@ -128,7 +141,7 @@ def setTactics(ind):
     for x in range(0,8):
         click(1490,584+x*22)
         time.sleep(0.11)
-        click(1324,568+ind[234+x]*22+x*22)
+        click(1324,568+ind[65+x]*22+x*22)
         time.sleep(0.11)
     click(643,465)
     time.sleep(0.11)
@@ -148,7 +161,7 @@ def vacation():
         print (str(x+1) + " of 82")
         if msvcrt.kbhit():
             if ord(msvcrt.getch()) == 27:
-                save(working, generation)
+                saveNoBak(working, generation)
                 sys.exit()
     get_region([79, 798, 111, 814], 15, Image.BICUBIC)
     string = get_string((src_path + str(15) + "test.png"), 3)
@@ -213,6 +226,12 @@ def save(pop, i):
         writer = csv.writer(File, delimiter=';')
         writer.writerows(pop.getFull())
 
+def saveNoBak(pop, i):
+    print("saving generation " + str(i) + " to csv")
+    with open(('gen' + str(i) + '.csv'), 'wb') as File:
+        writer = csv.writer(File, delimiter=';')
+        writer.writerows(pop.getFull())
+
 def read(i):
     print 'reading'
     with open(('gen'+str(i)+'.csv'), 'rb') as File:
@@ -222,7 +241,7 @@ def read(i):
             ind = Individual([])
             colNum = 0
             for col in row:
-                if colNum == 244 or colNum == 243 or colNum == 242:
+                if colNum == 73 or colNum == 74 or colNum == 75 or colNum == 76:
                     ind.append(float(col))
                 else:
                     ind.append(int(col))

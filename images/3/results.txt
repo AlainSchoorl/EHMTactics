@@ -1,0 +1,28 @@
+OCR Output:
+L04
+OCR Output:
+L 1-5
+OCR Output:
+W42
+OCR Output:
+L 2-6
+OCR Output:
+L3-5
+OCR Output:
+L 2-5
+OCR Output:
+L24
+OCR Output:
+Lot3-4
+OCR Output:
+L1-4
+OCR Output:
+L 1-5
+OCR Output:
+W 3-1
+OCR Output:
+L 2-5
+OCR Output:
+Lot2-3
+OCR Output:
+L1-4
