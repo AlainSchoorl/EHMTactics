@@ -479,7 +479,6 @@ for a in range(15, 19):
         delete()
         delete()
         delete()
-        type(str(y))
         a += 1
         # type(value)
     a += 1
