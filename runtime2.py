@@ -33,31 +33,31 @@ def randomPopulation():
         newGenes = []
         for y in range(0,5):
             for z in range(0,10):
-                mod = ((y * 13) + z) % 13
-                if mod == 1 or mod == 7:
-                    newGenes.append(random.randint(3, 5))
-                elif mod == 2 or mod == 6 or mod == 10:
-                    newGenes.append(random.randint(3, 3))
-                elif mod == 8 or mod == 9:
-                    newGenes.append(random.randint(2, 5))
+                if z == 0 or z == 6:
+                    newGenes.append(random.randint(3, 6))
+                elif z == 1 or z == 5 or z == 9:
+                    newGenes.append(random.randint(1, 4))
+                elif z == 7 or z == 8:
+                    newGenes.append(random.randint(2, 6))
                 else:
-                    newGenes.append(random.randint(1, 5))
+                    newGenes.append(random.randint(1, 6))
             for z in range(0,3):
-                newGenes.append(random.randint(0,1))
+                newGenes.append(random.randint(0,2))
+        newGenes.append(random.randint(1,6))
         newGenes.append(random.randint(1,5))
         newGenes.append(random.randint(1,4))
-        newGenes.append(random.randint(1,3))
-        newGenes.append(random.randint(1,6))
+        newGenes.append(random.randint(1,7))
+        newGenes.append(random.randint(1,5))
         newGenes.append(random.randint(1,4))
-        newGenes.append(random.randint(1,3))
+        newGenes.append(random.randint(1,5))
         newGenes.append(random.randint(1,4))
-        newGenes.append(random.randint(1,3))
         newGenes.append(0)
         newGenes.append(0)
         newGenes.append(-1)
         newGenes.append(0)
         newPopulation.append(Individual(newGenes))
     returnPop = Population(newPopulation)
+    save(returnPop, 1)
     return returnPop
 
 def runSimulation(sta, rs):
@@ -65,7 +65,7 @@ def runSimulation(sta, rs):
     while counter < (working.getLength()-1):
         for y in range(counter,working.getLength()):
             print ('getting ' + str(y))
-            if working.getIndividual(y)[244] < 0:
+            if working.getIndividual(y)[75] < 0:
                 print ('not done yet')
                 break
             else:
@@ -91,6 +91,7 @@ def runSimulation(sta, rs):
                 goalsAgainst = goalsAgainst + r[1]
                 working.getIndividual(counter)[73] = goalsFor
                 working.getIndividual(counter)[74] = goalsAgainst
+                working.getIndividual(counter)[76] += 1
                 save(working, generation)
                 reloadGame()
             working.getIndividual(counter)[75] = (goalsFor / (goalsFor + goalsAgainst))
@@ -241,7 +242,7 @@ def read(i):
             ind = Individual([])
             colNum = 0
             for col in row:
-                if colNum == 73 or colNum == 74 or colNum == 75 or colNum == 76:
+                if colNum == 73 or colNum == 74 or colNum == 75:
                     ind.append(float(col))
                 else:
                     ind.append(int(col))

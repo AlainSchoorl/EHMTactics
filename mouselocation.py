@@ -2,7 +2,9 @@ import pyautogui
 import random
 
 #print(pyautogui.position())
-print(random.random())
+
+for x in range(0,20):
+    print(random.randint(0,1))
 
 
 '''

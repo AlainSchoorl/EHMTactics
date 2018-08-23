@@ -14,6 +14,7 @@ import sys
 # mode = int(sys.argv[1])
 
 
+
 def click(x, y):
     ctypes.windll.user32.SetCursorPos(x, y)
     time.sleep(0.05)
@@ -76,40 +77,412 @@ def enter():
     ctypes.windll.user32.keybd_event(0x0D, 0, 0x0002, 0)
     time.sleep(0.05)
 
-stat1 = []
-stat2 = [1]
-stat3 = [13,15,16,17,18]
-statList = [stat1,stat2,stat3]
-value = "50"
+def read():
+    print 'reading'
+    readlist = []
+    with open(('roles.csv'), 'rb') as File:
+        reader = csv.reader(File, delimiter=';')
+        for row in reader:
+            role = []
+            for col in row:
+                role.append(int(col))
+            readlist.append(role)
+    return readlist
 
+def setTechs(i):
+    atts = []
+    for x in range(0,14):
+        atts.append(allRoles[i][x])
+    return atts
+
+def setMents(i):
+    atts = []
+    for x in range(14,27):
+        atts.append(allRoles[i][x])
+    return atts
+
+def setPhys(i):
+    atts = []
+    for x in range(27,37):
+        atts.append(allRoles[i][x])
+    return atts
+
+def setHW(i):
+    atts = []
+    for x in range(37,39):
+        atts.append(allRoles[i][x])
+    return atts
+
+def setRoles(i):
+    atts = []
+    for x in range(39,41):
+        atts.append(allRoles[i][x])
+    return atts
+
+allRoles = read()
+
+#0 : DefD
+#1 : DefD (Fin)
+#2 : DefD (Phy)
+#3 : OffD
+#4 : OffD (Fin)
+#5 : OffD (Phy)
+#6 : PMD
+#7 : PMD (Fin
+#8 : PMD (Phy)
+#9 : PntD
+#10: PntD (Fin)
+#11: PntD (Phy)
+#12: SAHD
+#13: TWD
+#14: TWF
+#15: DefF
+#16: DefF (Fin)
+#17: DefF (Phy)
+#18: SkF
+#19: Grinder
+#20: PMF
+#21: PMF (Fin)
+#22: PMF (Phy)
+#23: PowF
+#24: GSF
+#25: GSF (Fin)
+#26: GSF (Phy)
+
+techs = []
+ments = []
+phys = []
+ada = 12
+amb = 12
+det = 12
+loy = 12
+pre = 12
+pro = 12
+spo = 12
+tem = 12
+pers = [ada, amb, det, loy, pre, pro, spo, tem]
+hw = []
+roles = []
 time.sleep(2)
 click(548, 108)
 
 #35 / 16
 #930, 308
 #1136, 328
-for a in range(1, 16):
+
+roleNum = 13
+techs = setTechs(roleNum)
+ments = setMents(roleNum)
+phys = setPhys(roleNum)
+hw = setHW(roleNum)
+roles = setRoles(roleNum)
+
+for a in range(1, 4):
     doubleClick(98, 168 + (a*17))
     time.sleep(0.4)
     c = 1
-    for x in statList:
-        for y in x:
-            click(733 + (c*206), 299 + (y*20))
-            delete()
-            delete()
-            delete()
-            ran = random.choice([1,2,4,17,19,20])
-            ran = str(ran)
-            type(ran)
-            #type(value)
-        c += 1
-    '''c = 1
-    for y in stat0:
-        click(743, 299 + (y * 20))
+    a = 0
+    for y in techs:
+        click(733 + (c*206), 319 + (a*20))
         delete()
         delete()
         delete()
-        type(value)'''
+        type(str(y))
+        a += 1
+        #type(value)
+    a += 9
+    for y in hw:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    c += 1
+    a = 0
+    for y in ments:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a += 1
+    a += 9
+    for y in roles:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a = 0
+    c += 1
+    for y in phys:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a += 1
+    click(1397, 183)
+    time.sleep(0.4)
+
+roleNum = 6
+techs = setTechs(roleNum)
+ments = setMents(roleNum)
+phys = setPhys(roleNum)
+hw = setHW(roleNum)
+roles = setRoles(roleNum)
+
+for a in range(4, 7):
+    doubleClick(98, 168 + (a*17))
+    time.sleep(0.4)
+    c = 1
+    a = 0
+    for y in techs:
+        click(733 + (c*206), 319 + (a*20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        #type(value)
+    a += 9
+    for y in hw:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    c += 1
+    a = 0
+    for y in ments:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a += 1
+    a += 9
+    for y in roles:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a = 0
+    c += 1
+    for y in phys:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a += 1
+    click(1397, 183)
+    time.sleep(0.4)
+
+roleNum = 14
+techs = setTechs(roleNum)
+ments = setMents(roleNum)
+phys = setPhys(roleNum)
+hw = setHW(roleNum)
+roles = setRoles(roleNum)
+
+for a in range(7, 11):
+    doubleClick(98, 168 + (a*17))
+    time.sleep(0.4)
+    c = 1
+    a = 0
+    for y in techs:
+        click(733 + (c*206), 319 + (a*20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        #type(value)
+    a += 9
+    for y in hw:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    c += 1
+    a = 0
+    for y in ments:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a += 1
+    a += 9
+    for y in roles:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a = 0
+    c += 1
+    for y in phys:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a += 1
+    click(1397, 183)
+    time.sleep(0.4)
+
+roleNum = 20
+techs = setTechs(roleNum)
+ments = setMents(roleNum)
+phys = setPhys(roleNum)
+hw = setHW(roleNum)
+roles = setRoles(roleNum)
+
+for a in range(11, 15):
+    doubleClick(98, 168 + (a*17))
+    time.sleep(0.4)
+    c = 1
+    a = 0
+    techs[4] = 80
+    for y in techs:
+        click(733 + (c*206), 319 + (a*20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        #type(value)
+    a += 9
+    for y in hw:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    c += 1
+    a = 0
+    for y in ments:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a += 1
+    a += 9
+    for y in roles:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a = 0
+    c += 1
+    for y in phys:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a += 1
+    click(1397, 183)
+    time.sleep(0.4)
+
+roleNum = 24
+techs = setTechs(roleNum)
+ments = setMents(roleNum)
+phys = setPhys(roleNum)
+hw = setHW(roleNum)
+roles = setRoles(roleNum)
+
+for a in range(15, 19):
+    doubleClick(98, 168 + (a*17))
+    time.sleep(0.4)
+    c = 1
+    a = 0
+    for y in techs:
+        click(733 + (c*206), 319 + (a*20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        #type(value)
+    a += 9
+    for y in hw:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    c += 1
+    a = 0
+    for y in ments:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a += 1
+    a += 9
+    for y in roles:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a = 0
+    c += 1
+    for y in phys:
+        click(733 + (c * 206), 319 + (a * 20))
+        delete()
+        delete()
+        delete()
+        type(str(y))
+        a += 1
+        # type(value)
+    a += 1
     click(1397, 183)
     time.sleep(0.4)
 
